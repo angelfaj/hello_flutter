@@ -1,0 +1,446 @@
+───────┬─────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+       │ File: [1mhello_world/lib/main.dart[0m
+───────┼─────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+   1   │ [35mimport[0m [32m'package:flutter/material.dart'[0m;
+   2 [32m+[0m │ [35mimport[0m [32m'package:flutter_riverpod/flutter_riverpod.dart'[0m;
+   3 [32m+[0m │ [35mimport[0m [32m'package:flutter_riverpod/legacy.dart'[0m;
+   4   │ 
+   5   │ [35mvoid[0m [34mmain[0m() {
+   6   │   [34mrunApp[0m(
+   7 [33m~[0m │     [33mProviderScope[0m(
+   8 [33m~[0m │       child[35m:[0m [33mMaterialApp[0m(
+   9 [33m~[0m │         title[35m:[0m [32m'App de testeo de componentes'[0m,
+  10 [33m~[0m │         home[35m:[0m [33mScaffold[0m(
+  11 [33m~[0m │           [32m// appBar: AppBar(title: const Text('Simple Riverpod app')),[0m
+  12 [33m~[0m │           body[35m:[0m [35mconst[0m [33mMenuScreen[0m(),
+  13 [33m~[0m │         ),
+  14 [33m~[0m │         [32m//ROutes es para mapas estaticos, si queremos logica y validaciones debemos utilizar onGenerateRoute[0m
+  15 [33m~[0m │         routes[35m:[0m [35m<[0m[33mString[0m, [33mWidgetBuilder[0m[35m>[0m{
+  16 [33m~[0m │           [32m'/user_profile'[0m[35m:[0m (context) [35m=>[0m [33mUserProfileScreen[0m([32m""[0m),
+  17 [33m~[0m │         },
+  18 [33m~[0m │         onGenerateRoute[35m:[0m (settings) {
+  19 [33m~[0m │           [35mif[0m (settings.name[35m![0m.[34mcontains[0m([32m'user_profile'[0m)) {
+  20 [33m~[0m │             [32m//Argumentos pasados por arguments[0m
+  21 [33m~[0m │             [32m// final args = settings.arguments;[0m
+  22 [33m~[0m │ 
+  23 [33m~[0m │             [32m// Argumentos pasados por ruta: /user_profile/user_id[0m
+  24 [33m~[0m │             [35mvar[0m uri [35m=[0m [33mUri[0m.[34mparse[0m(settings.name[35m![0m);
+  25 [33m~[0m │             [35mif[0m (uri.pathSegments.length [35m>=[0m [33m2[0m) {
+  26 [33m~[0m │               [35mvar[0m id [35m=[0m uri.pathSegments[[33m1[0m];
+  27 [33m~[0m │               [35mreturn[0m [33mMaterialPageRoute[0m(
+  28 [33m~[0m │                 builder[35m:[0m (context) [35m=>[0m [33mUserProfileScreen[0m(id),
+  29 [33m~[0m │               );
+  30 [33m~[0m │             }
+  31 [33m~[0m │           }
+  32 [33m~[0m │         },
+  33 [33m~[0m │       ),
+  34 [33m~[0m │     ),
+  35   │   );
+  36   │ }
+  37   │ 
+  38 [33m~[0m │ [32m//Navegacion de pantallas con Navigation API[0m
+  39 [33m~[0m │ [35mclass[0m [33mMenuScreen[0m [35mextends[0m [33mStatelessWidget[0m {
+  40 [33m~[0m │   [35mconst[0m [33mMenuScreen[0m({super.key});
+  41   │ 
+  42   │   [35m@override[0m
+  43   │   [33mWidget[0m [34mbuild[0m([33mBuildContext[0m context) {
+  44   │     [35mreturn[0m [33mScaffold[0m(
+  45 [33m~[0m │       appBar[35m:[0m [33mAppBar[0m(title[35m:[0m [35mconst[0m [33mText[0m([32m'Menu'[0m)),
+  46 [33m~[0m │       body[35m:[0m [33mCenter[0m(
+  47 [33m~[0m │         child[35m:[0m [33mColumn[0m(
+  48 [33m~[0m │           children[35m:[0m [
+  49 [33m~[0m │             [33mElevatedButton[0m(
+  50 [33m~[0m │               onPressed[35m:[0m () {
+  51 [33m~[0m │                 [32m//Navegar a otra pantalla[0m
+  52 [33m~[0m │                 [33mNavigator[0m.[34mpush[0m(
+  53 [33m~[0m │                   context,
+  54 [33m~[0m │                   [33mMaterialPageRoute[0m(builder[35m:[0m (context) [35m=>[0m [33mSecondScreen[0m()),
+  55 [33m~[0m │                 );
+  56 [33m~[0m │               },
+  57 [33m~[0m │               child[35m:[0m [35mconst[0m [33mText[0m([32m'Abrir siguiente pantalla'[0m),
+  58 [33m~[0m │             ),
+  59 [33m~[0m │             [33mPadding[0m(padding[35m:[0m [33mEdgeInsets[0m.[34mall[0m([33m10[0m)),
+  60 [33m~[0m │             [33mElevatedButton[0m(
+  61 [33m~[0m │               onPressed[35m:[0m () {
+  62 [33m~[0m │                 [32m//Navegar a otra pantalla[0m
+  63 [33m~[0m │                 [32m//Pasando argumentos con arguments (seguridad y validacion)[0m
+  64 [33m~[0m │                 [32m// Navigator.pushNamed([0m
+  65 [33m~[0m │                 [32m//   context,[0m
+  66 [33m~[0m │                 [32m//   '/user_profile',[0m
+  67 [33m~[0m │                 [32m//   arguments: 'manolitogafotas',[0m
+  68 [33m~[0m │                 [32m// );[0m
+  69 [33m~[0m │ 
+  70 [33m~[0m │                 [32m//Alternativa pasando los argumentos en la ruta (mayor legibilidad)[0m
+  71 [33m~[0m │                 [33mNavigator[0m.[34mpushNamed[0m(context, [32m'/user_profile/manolitogafotas'[0m);
+  72 [33m~[0m │               },
+  73 [33m~[0m │               child[35m:[0m [35mconst[0m [33mText[0m([32m'Abrir perfil usuario'[0m),
+  74 [33m~[0m │             ),
+  75 [33m~[0m │           ],
+  76 [33m~[0m │         ),
+  77 [33m~[0m │       ),
+  78   │     );
+  79   │   }
+  80   │ }
+  81   │ 
+  82 [33m~[0m │ [35mclass[0m [33mSecondScreen[0m [35mextends[0m [33mStatelessWidget[0m {
+  83 [33m~[0m │   [35mconst[0m [33mSecondScreen[0m({super.key});
+  84   │ 
+  85   │   [35m@override[0m
+  86   │   [33mWidget[0m [34mbuild[0m([33mBuildContext[0m context) {
+  87 [33m~[0m │     [35mreturn[0m [33mScaffold[0m(
+  88 [33m~[0m │       appBar[35m:[0m [33mAppBar[0m(title[35m:[0m [35mconst[0m [33mText[0m([32m'Second screen'[0m)),
+  89 [33m~[0m │       body[35m:[0m [33mCenter[0m(
+  90 [33m~[0m │         child[35m:[0m [33mElevatedButton[0m(
+  91 [33m~[0m │           onPressed[35m:[0m () {
+  92 [33m~[0m │             [32m//Volver a la pantalla anterior[0m
+  93 [33m~[0m │             [33mNavigator[0m.[34mpop[0m(context);
+  94 [33m~[0m │           },
+  95 [33m~[0m │           child[35m:[0m [35mconst[0m [33mText[0m([32m'Volver'[0m),
+  96   │         ),
+  97 [33m~[0m │       ),
+  98   │     );
+  99   │   }
+ 100   │ }
+ 101   │ 
+ 102 [33m~[0m │ [35mclass[0m [33mUserProfileScreen[0m [35mextends[0m [33mStatelessWidget[0m {
+ 103 [33m~[0m │   [35mfinal[0m [33mString[0m _userID;
+ 104 [33m~[0m │   [35mconst[0m [33mUserProfileScreen[0m(this._userID, {super.key});
+ 105   │ 
+ 106 [33m~[0m │   [35m@override[0m
+ 107 [33m~[0m │   [33mWidget[0m [34mbuild[0m([33mBuildContext[0m context) {
+ 108 [33m~[0m │     [32m//final userID = ModalRoute.of(context)![0m
+ 109 [33m~[0m │     [32m//    .settings[0m
+ 110 [33m~[0m │     [32m//    .arguments; //Logica que permite recoger los args pasados por parametro[0m
+ 111 [33m~[0m │ 
+ 112 [33m~[0m │     [35mreturn[0m [33mScaffold[0m(
+ 113 [33m~[0m │       appBar[35m:[0m [33mAppBar[0m(title[35m:[0m [35mconst[0m [33mText[0m([32m'Perfil usuario'[0m)),
+ 114 [33m~[0m │       body[35m:[0m [33mColumn[0m(
+ 115 [33m~[0m │         children[35m:[0m [
+ 116 [33m~[0m │           [33mText[0m([32m'Manolito gafotas, userID pasado por parametro= $[0m[36m_userID[0m[32m'[0m),
+ 117 [33m~[0m │           [33mElevatedButton[0m(
+ 118 [33m~[0m │             onPressed[35m:[0m () {
+ 119 [33m~[0m │               [32m//Volver a la pantalla anterior[0m
+ 120 [33m~[0m │               [33mNavigator[0m.[34mpop[0m(context);
+ 121 [33m~[0m │             },
+ 122 [33m~[0m │             child[35m:[0m [35mconst[0m [33mText[0m([32m'Cerrar'[0m),
+ 123 [33m~[0m │           ),
+ 124 [33m~[0m │         ],
+ 125 [33m~[0m │       ),
+ 126 [33m~[0m │     );
+ 127 [33m~[0m │   }
+ 128 [33m~[0m │ }
+ 129 [33m~[0m │ 
+ 130 [33m~[0m │ [32m//Gestion de estados con Riverpod[0m
+ 131 [33m~[0m │ [32m//Clase padre de settings[0m
+ 132 [33m~[0m │ [35mclass[0m [33mSettingsScreen[0m [35mextends[0m [33mStatelessWidget[0m {
+ 133 [33m~[0m │   [35mconst[0m [33mSettingsScreen[0m({super.key});
+ 134   │ 
+ 135   │   [35m@override[0m
+ 136   │   [33mWidget[0m [34mbuild[0m([33mBuildContext[0m context) {
+ 137 [33m~[0m │     [35mreturn[0m [33mScaffold[0m(
+ 138 [33m~[0m │       appBar[35m:[0m [33mAppBar[0m(title[35m:[0m [35mconst[0m [33mText[0m([32m'Estados con Riverpod'[0m)),
+ 139 [33m~[0m │       body[35m:[0m [33mColumn[0m(children[35m:[0m [[33mColorSelection[0m(), [33mColoredBox[0m()]),
+ 140 [33m~[0m │     );
+ 141 [33m~[0m │   }
+ 142 [33m~[0m │ }
+ 143 [33m~[0m │ 
+ 144 [33m~[0m │ [32m//Este es el estado[0m
+ 145 [33m~[0m │ [35mclass[0m [33mColorSettings[0m {
+ 146 [33m~[0m │   [35mfinal[0m [33mbool[0m useRed;
+ 147 [33m~[0m │   [35mconst[0m [33mColorSettings[0m(this.useRed);
+ 148 [33m~[0m │ }
+ 149 [33m~[0m │ 
+ 150 [33m~[0m │ [32m//Este el StateNotifier, donde deben realizarse los cambios en el estado[0m
+ 151 [33m~[0m │ [35mclass[0m [33mColorSettingsNotifier[0m [35mextends[0m [33mStateNotifier[0m[35m<[0m[33mColorSettings[0m[35m>[0m {
+ 152 [33m~[0m │   [33mColorSettingsNotifier[0m(super.state);
+ 153 [33m~[0m │ 
+ 154 [33m~[0m │   [35mvoid[0m [34msetRed[0m() {
+ 155 [33m~[0m │     state [35m=[0m [35mconst[0m [33mColorSettings[0m([33mtrue[0m); [32m//Nueva instancia con el nuevo estado[0m
+ 156 [33m~[0m │   }
+ 157 [33m~[0m │ 
+ 158 [33m~[0m │   [35mvoid[0m [34munsetRed[0m() {
+ 159 [33m~[0m │     state [35m=[0m [35mconst[0m [33mColorSettings[0m([33mfalse[0m); [32m//Nueva instancia cn el nuevo estado[0m
+ 160 [33m~[0m │   }
+ 161 [33m~[0m │ }
+ 162 [33m~[0m │ 
+ 163 [33m~[0m │ [32m//StateNotifierProvider[0m
+ 164 [33m~[0m │ [35mfinal[0m colorSettingsProvider [35m=[0m
+ 165 [33m~[0m │     [33mStateNotifierProvider[0m[35m<[0m[33mColorSettingsNotifier[0m, [33mColorSettings[0m[35m>[0m(
+ 166 [33m~[0m │       (_) [35m=>[0m [33mColorSettingsNotifier[0m([35mconst[0m [33mColorSettings[0m([33mfalse[0m)),
+ 167 [33m~[0m │     );
+ 168 [33m~[0m │ 
+ 169 [33m~[0m │ [35mclass[0m [33mColorSelection[0m [35mextends[0m [33mConsumerWidget[0m {
+ 170 [33m~[0m │   [35mconst[0m [33mColorSelection[0m({super.key});
+ 171 [33m~[0m │ 
+ 172 [33m~[0m │   [35m@override[0m
+ 173 [33m~[0m │   [33mWidget[0m [34mbuild[0m([33mBuildContext[0m context, [33mWidgetRef[0m ref) {
+ 174 [33m~[0m │     [35mvar[0m colorSettings [35m=[0m ref.[34mwatch[0m(colorSettingsProvider);
+ 175 [33m~[0m │     [35mreturn[0m [33mRow[0m(
+ 176 [33m~[0m │       children[35m:[0m [
+ 177 [33m~[0m │         [33mCheckbox[0m(
+ 178 [33m~[0m │           value[35m:[0m colorSettings.useRed,
+ 179 [33m~[0m │           onChanged[35m:[0m (isChecked) [35m=>[0m {
+ 180 [33m~[0m │             [34monCheckBoxPressed[0m(isChecked, ref, context),
+ 181   │           },
+ 182 [33m~[0m │         ),
+ 183 [33m~[0m │         [35mconst[0m [33mText[0m([32m'Rojo'[0m),
+ 184 [33m~[0m │       ],
+ 185   │     );
+ 186   │   }
+ 187 [32m+[0m │ 
+ 188 [32m+[0m │   [35mvoid[0m [34monCheckBoxPressed[0m([33mbool[0m[35m?[0m isChecked, [33mWidgetRef[0m ref, [33mBuildContext[0m context) {
+ 189 [32m+[0m │     [35mvar[0m colorSettingsNotifier [35m=[0m ref.[34mread[0m(colorSettingsProvider.notifier);
+ 190 [32m+[0m │ 
+ 191 [32m+[0m │     [35mif[0m (isChecked[35m![0m) {
+ 192 [32m+[0m │       colorSettingsNotifier.[34msetRed[0m();
+ 193 [32m+[0m │     } [35melse[0m {
+ 194 [32m+[0m │       colorSettingsNotifier.[34munsetRed[0m();
+ 195 [32m+[0m │     }
+ 196 [32m+[0m │   }
+ 197   │ }
+ 198   │ 
+ 199 [32m+[0m │ [35mclass[0m [33mColoredBox[0m [35mextends[0m [33mConsumerWidget[0m {
+ 200 [32m+[0m │   [35mconst[0m [33mColoredBox[0m({super.key});
+ 201   │ 
+ 202 [33m~[0m │   [35m@override[0m
+ 203 [33m~[0m │   [33mWidget[0m [34mbuild[0m([33mBuildContext[0m context, [33mWidgetRef[0m ref) {
+ 204 [33m~[0m │     [35mvar[0m colorSettings [35m=[0m ref.[34mwatch[0m(colorSettingsProvider);
+ 205 [33m~[0m │ 
+ 206 [33m~[0m │     [35mreturn[0m [33mContainer[0m(
+ 207 [33m~[0m │       color[35m:[0m colorSettings.useRed [35m?[0m [33mColors[0m.red [35m:[0m [33mColors[0m.black38,
+ 208 [33m~[0m │       padding[35m:[0m [35mconst[0m [33mEdgeInsets[0m.[34mall[0m([33m10[0m),
+ 209 [33m~[0m │       margin[35m:[0m [35mconst[0m [33mEdgeInsets[0m.[34mall[0m([33m10[0m),
+ 210 [33m~[0m │     );
+ 211 [33m~[0m │   }
+ 212 [33m~[0m │ }
+ 213 [33m~[0m │ 
+ 214 [33m~[0m │ [32m//Navegacion de pantallas con navigation bar[0m
+ 215 [33m~[0m │ [32m//Lamando a esta clase desde MarialApp home: obtenemos una app sencilla de navegacion entre pantallas[0m
+ 216 [33m~[0m │ [35mclass[0m [33mBottomNavigationBarDemoScreen[0m [35mextends[0m [33mStatefulWidget[0m {
+ 217 [33m~[0m │   [35mconst[0m [33mBottomNavigationBarDemoScreen[0m({super.key});
+ 218 [33m~[0m │ 
+ 219 [33m~[0m │   [35m@override[0m
+ 220 [33m~[0m │   [33mState[0m[35m<[0m[33mStatefulWidget[0m[35m>[0m [34mcreateState[0m() [35m=>[0m [33m_BottomNavigationBarDemoScreenState[0m();
+ 221 [33m~[0m │ }
+ 222 [33m~[0m │ 
+ 223 [33m~[0m │ [35mclass[0m [33m_BottomNavigationBarDemoScreenState[0m
+ 224 [33m~[0m │     [35mextends[0m [33mState[0m[35m<[0m[33mBottomNavigationBarDemoScreen[0m[35m>[0m {
+ 225 [33m~[0m │   [33mint[0m _selectedIndex [35m=[0m [33m0[0m;
+ 226 [33m~[0m │ 
+ 227 [33m~[0m │   [35mvoid[0m [34m_onItemTapped[0m([33mint[0m index) {
+ 228 [33m~[0m │     [34msetState[0m(() {
+ 229 [33m~[0m │       _selectedIndex [35m=[0m index;
+ 230 [33m~[0m │     });
+ 231 [33m~[0m │   }
+ 232 [33m~[0m │ 
+ 233 [33m~[0m │   [35mfinal[0m [33mList[0m[35m<[0m[33mWidget[0m[35m>[0m _screen [35m=[0m [
+ 234 [33m~[0m │     [33mSettingsScreen[0m(),
+ 235 [33m~[0m │     [33mListViewScreen[0m(),
+ 236 [33m~[0m │     [33mImagesScreen[0m(),
+ 237 [33m~[0m │   ];
+ 238 [33m~[0m │ 
+ 239 [33m~[0m │   [35m@override[0m
+ 240 [33m~[0m │   [33mWidget[0m [34mbuild[0m([33mBuildContext[0m context) {
+ 241 [33m~[0m │     [35mreturn[0m [33mScaffold[0m(
+ 242 [33m~[0m │       appBar[35m:[0m [33mAppBar[0m(title[35m:[0m [35mconst[0m [33mText[0m([32m'BottomNavigationBar simple'[0m)),
+ 243 [33m~[0m │       bottomNavigationBar[35m:[0m [33mBottomNavigationBar[0m(
+ 244 [33m~[0m │         items[35m:[0m [
+ 245 [33m~[0m │           [33mBottomNavigationBarItem[0m(icon[35m:[0m [33mIcon[0m([33mIcons[0m.home), label[35m:[0m [32m'Home'[0m),
+ 246 [33m~[0m │           [33mBottomNavigationBarItem[0m(icon[35m:[0m [33mIcon[0m([33mIcons[0m.business), label[35m:[0m [32m'Work'[0m),
+ 247 [33m~[0m │           [33mBottomNavigationBarItem[0m(icon[35m:[0m [33mIcon[0m([33mIcons[0m.image), label[35m:[0m [32m'Pictures'[0m),
+ 248 [33m~[0m │         ],
+ 249 [33m~[0m │         currentIndex[35m:[0m _selectedIndex,
+ 250 [33m~[0m │         onTap[35m:[0m _onItemTapped,
+ 251 [33m~[0m │       ),
+ 252 [33m~[0m │       body[35m:[0m _screen[_selectedIndex],
+ 253 [33m~[0m │     );
+ 254 [33m~[0m │   }
+ 255 [33m~[0m │ }
+ 256 [33m~[0m │ 
+ 257 [33m~[0m │ [32m//  IMAGENES[0m
+ 258   │ [35mclass[0m [33mImagesScreen[0m [35mextends[0m [33mStatelessWidget[0m {
+ 259   │   [35mconst[0m [33mImagesScreen[0m({super.key});
+ 260   │ 
+ 261   │   [35m@override[0m
+ 262   │   [33mWidget[0m [34mbuild[0m([33mBuildContext[0m context) {
+ 263   │     [35mreturn[0m [33mScaffold[0m(
+ 264   │       appBar[35m:[0m [33mAppBar[0m(title[35m:[0m [35mconst[0m [33mText[0m([32m'Imágenes'[0m)),
+ 265   │       body[35m:[0m [33mImagesList[0m(),
+ 266   │     );
+ 267 [32m+[0m │   }
+ 268   │ }
+ 269   │ 
+ 270   │ [35mclass[0m [33mImagesList[0m [35mextends[0m [33mStatelessWidget[0m {
+ 271   │   [35mconst[0m [33mImagesList[0m({super.key});
+ 272   │ 
+ 273   │   [35m@override[0m
+ 274   │   [33mWidget[0m [34mbuild[0m([33mBuildContext[0m context) {
+ 275   │     [35mreturn[0m [33mSingleChildScrollView[0m(
+ 276   │       child[35m:[0m [33mColumn[0m(
+ 277   │         children[35m:[0m [
+ 278   │           [33mPadding[0m(
+ 279   │             padding[35m:[0m [33mEdgeInsets[0m.[34mall[0m([33m40[0m),
+ 280   │             child[35m:[0m [33mImage[0m(image[35m:[0m [33mAssetImage[0m([32m'images/gallo.jpg'[0m)),
+ 281   │           ),
+ 282   │           [33mPadding[0m(
+ 283   │             padding[35m:[0m [33mEdgeInsets[0m.[34mall[0m([33m40[0m),
+ 284   │             child[35m:[0m [33mImage[0m(image[35m:[0m [33mAssetImage[0m([32m'images/suricata.jpg'[0m)),
+ 285   │           ),
+ 286   │           [33mPadding[0m(
+ 287   │             padding[35m:[0m [33mEdgeInsets[0m.[34mall[0m([33m40[0m),
+ 288   │             child[35m:[0m [33mImage[0m(image[35m:[0m [33mAssetImage[0m([32m'images/cover.jpg'[0m)),
+ 289   │           ),
+ 290 [33m~[0m │           [32m// Padding([0m
+ 291 [33m~[0m │           [32m//   padding: EdgeInsets.all(40),[0m
+ 292 [33m~[0m │           [32m//   child: Image.network([0m
+ 293 [33m~[0m │           [32m//     'https://files.maldita.es/maldita/uploads/undated/foto%20gorila%20broma.jpg',[0m
+ 294 [33m~[0m │           [32m//     loadingBuilder: (context, child, loadingProgress) {[0m
+ 295 [33m~[0m │           [32m//       if (loadingProgress == null) return child;[0m
+ 296 [33m~[0m │           [32m//       return Center(child: CircularProgressIndicator());[0m
+ 297 [33m~[0m │           [32m//     },[0m
+ 298 [33m~[0m │           [32m//   ),[0m
+ 299 [33m~[0m │           [32m// ),[0m
+ 300   │         ],
+ 301   │       ),
+ 302   │     );
+ 303   │   }
+ 304 [31m_[0m │ }
+ 305   │ 
+ 306 [33m~[0m │ [32m// BOTONES FLOTANTES[0m
+ 307   │ [35mclass[0m [33m_FloatingActionButtonDemo[0m [35mextends[0m [33mStatelessWidget[0m {
+ 308   │   [35m@override[0m
+ 309   │   [33mWidget[0m [34mbuild[0m([33mBuildContext[0m context) {
+ 310   │     [35mreturn[0m [33mScaffold[0m(
+ 311   │       appBar[35m:[0m [33mAppBar[0m(title[35m:[0m [35mconst[0m [33mText[0m([32m'Flotating action button'[0m)),
+ 312   │       floatingActionButton[35m:[0m [33mFloatingActionButton[0m(
+ 313   │         onPressed[35m:[0m () {
+ 314   │           [32m//hacer algo[0m
+ 315   │         },
+ 316   │         backgroundColor[35m:[0m [33mColors[0m.green,
+ 317   │         child[35m:[0m [35mconst[0m [33mIcon[0m([33mIcons[0m.navigation),
+ 318   │       ),
+ 319   │     );
+ 320   │   }
+ 321   │ }
+ 322   │ 
+ 323   │ [35mclass[0m [33m_FloatingActionButtonExtendedDemo[0m [35mextends[0m [33mStatelessWidget[0m {
+ 324   │   [35m@override[0m
+ 325   │   [33mWidget[0m [34mbuild[0m([33mBuildContext[0m context) {
+ 326   │     [35mreturn[0m [33mScaffold[0m(
+ 327   │       appBar[35m:[0m [33mAppBar[0m(title[35m:[0m [35mconst[0m [33mText[0m([32m'Flotating action button'[0m)),
+ 328   │       floatingActionButton[35m:[0m [33mFloatingActionButton[0m.[34mextended[0m(
+ 329   │         onPressed[35m:[0m () {},
+ 330   │         label[35m:[0m [35mconst[0m [33mText[0m([32m'Compartir'[0m),
+ 331   │         icon[35m:[0m [35mconst[0m [33mIcon[0m([33mIcons[0m.share),
+ 332   │         backgroundColor[35m:[0m [33mColors[0m.blue,
+ 333   │       ),
+ 334   │     );
+ 335   │   }
+ 336   │ }
+ 337 [33m~[0m │ 
+ 338 [33m~[0m │ [32m//  LISTAS[0m
+ 339 [33m~[0m │ [35mclass[0m [33mListViewScreen[0m [35mextends[0m [33mStatelessWidget[0m {
+ 340 [33m~[0m │   [35mconst[0m [33mListViewScreen[0m({super.key});
+ 341 [33m~[0m │ 
+ 342 [33m~[0m │   [35m@override[0m
+ 343 [33m~[0m │   [33mWidget[0m [34mbuild[0m([33mBuildContext[0m context) {
+ 344 [33m~[0m │     [35mreturn[0m [33mScaffold[0m(
+ 345 [33m~[0m │       appBar[35m:[0m [33mAppBar[0m(title[35m:[0m [35mconst[0m [33mText[0m([32m'Listas con ListView'[0m)),
+ 346 [33m~[0m │       body[35m:[0m [33mListViewWidgetsWithBuilderAndTappable[0m(),
+ 347 [33m~[0m │     );
+ 348 [33m~[0m │   }
+ 349 [33m~[0m │ }
+ 350 [33m~[0m │ 
+ 351 [33m~[0m │ [35mclass[0m [33mListViewWidgets[0m [35mextends[0m [33mStatelessWidget[0m {
+ 352 [33m~[0m │   [35mconst[0m [33mListViewWidgets[0m({super.key});
+ 353 [33m~[0m │ 
+ 354 [33m~[0m │   [35m@override[0m
+ 355 [33m~[0m │   [33mWidget[0m [34mbuild[0m([33mBuildContext[0m context) {
+ 356 [33m~[0m │     [35mreturn[0m [33mListView[0m(
+ 357 [33m~[0m │       padding[35m:[0m [33mEdgeInsets[0m.[34mall[0m([33m10[0m),
+ 358 [33m~[0m │       children[35m:[0m [
+ 359 [33m~[0m │         [33mContainer[0m(
+ 360 [33m~[0m │           height[35m:[0m [33m40[0m,
+ 361 [33m~[0m │           color[35m:[0m [33mColors[0m.amber,
+ 362 [33m~[0m │           child[35m:[0m [33mCenter[0m(child[35m:[0m [33mText[0m([32m'Fila 1'[0m)),
+ 363 [33m~[0m │         ),
+ 364 [33m~[0m │         [33mContainer[0m(
+ 365 [33m~[0m │           height[35m:[0m [33m40[0m,
+ 366 [33m~[0m │           color[35m:[0m [33mColors[0m.blueGrey,
+ 367 [33m~[0m │           child[35m:[0m [33mCenter[0m(child[35m:[0m [33mText[0m([32m'Fila 2'[0m)),
+ 368 [33m~[0m │         ),
+ 369 [33m~[0m │         [33mContainer[0m(
+ 370 [33m~[0m │           height[35m:[0m [33m40[0m,
+ 371 [33m~[0m │           color[35m:[0m [33mColors[0m.orangeAccent,
+ 372 [33m~[0m │           child[35m:[0m [33mCenter[0m(child[35m:[0m [33mText[0m([32m'Fila 3'[0m)),
+ 373 [33m~[0m │         ),
+ 374 [33m~[0m │         [33mContainer[0m(
+ 375 [33m~[0m │           height[35m:[0m [33m40[0m,
+ 376 [33m~[0m │           color[35m:[0m [33mColors[0m.redAccent,
+ 377 [33m~[0m │           child[35m:[0m [33mCenter[0m(child[35m:[0m [33mText[0m([32m'Fila 4'[0m)),
+ 378 [33m~[0m │         ),
+ 379 [33m~[0m │       ],
+ 380 [33m~[0m │     );
+ 381 [33m~[0m │   }
+ 382 [33m~[0m │ }
+ 383 [33m~[0m │ 
+ 384 [33m~[0m │ [35mclass[0m [33mListViewWidgetsWithBuilderAndTappable[0m [35mextends[0m [33mStatelessWidget[0m {
+ 385 [33m~[0m │   [33mListViewWidgetsWithBuilderAndTappable[0m({super.key});
+ 386 [33m~[0m │ 
+ 387 [33m~[0m │   [35mfinal[0m [33mList[0m[35m<[0m[33mString[0m[35m>[0m rowsStrings [35m=[0m [[32m'A'[0m, [32m'B'[0m, [32m'C'[0m, [32m'D'[0m];
+ 388 [33m~[0m │   [35mfinal[0m [33mList[0m[35m<[0m[33mint[0m[35m>[0m colorCodes [35m=[0m [[33m500[0m, [33m400[0m, [33m300[0m, [33m200[0m];
+ 389 [33m~[0m │ 
+ 390 [33m~[0m │   [35m@override[0m
+ 391 [33m~[0m │   [33mWidget[0m [34mbuild[0m([33mBuildContext[0m context) {
+ 392 [33m~[0m │     [35mreturn[0m [33mListView[0m.[34mbuilder[0m(
+ 393 [33m~[0m │       padding[35m:[0m [33mEdgeInsets[0m.[34mall[0m([33m10[0m),
+ 394 [33m~[0m │       itemCount[35m:[0m rowsStrings.length,
+ 395 [33m~[0m │       itemBuilder[35m:[0m (context, index) {
+ 396 [33m~[0m │         [35mreturn[0m [33mInkWell[0m(
+ 397 [33m~[0m │           splashColor[35m:[0m [33mColors[0m.blue,
+ 398 [33m~[0m │           onTap[35m:[0m () {
+ 399 [33m~[0m │             [33mScaffoldMessenger[0m.[34mof[0m(context).[34mshowSnackBar[0m(
+ 400 [33m~[0m │               [33mSnackBar[0m(content[35m:[0m [33mText[0m([32m'Fila ${[0m[36mrowsStrings[index][0m[32m} te saluda!'[0m)),
+ 401 [33m~[0m │             );
+ 402 [33m~[0m │           },
+ 403 [33m~[0m │           child[35m:[0m [33mListTile[0m(
+ 404 [33m~[0m │             title[35m:[0m [33mCenter[0m(child[35m:[0m [33mText[0m([32m'Fila ${[0m[36mrowsStrings[index][0m[32m}'[0m)),
+ 405 [33m~[0m │             tileColor[35m:[0m [33mColors[0m.amber[colorCodes[index]],
+ 406 [33m~[0m │           ),
+ 407 [33m~[0m │         );
+ 408 [33m~[0m │       },
+ 409 [33m~[0m │     );
+ 410 [33m~[0m │   }
+ 411 [33m~[0m │ }
+ 412 [33m~[0m │ 
+ 413   │ 
+ 414   │ [32m// class HolaFlutter extends StatelessWidget {[0m
+ 415   │ [32m//   @override[0m
+ 416   │ [32m//   Widget build(BuildContext context) {[0m
+ 417   │ [32m//     var widgetTxt = Text([0m
+ 418   │ [32m//       "Hola hola",[0m
+ 419   │ [32m//       textDirection: TextDirection.ltr,[0m
+ 420   │ [32m//       style: TextStyle(fontSize: 32),[0m
+ 421   │ [32m//     );[0m
+ 422   │ 
+ 423   │ [32m//     var widgetCenter = Center(child: widgetTxt);[0m
+ 424   │ 
+ 425   │ [32m//     return widgetCenter;[0m
+ 426   │ [32m//   }[0m
+ 427   │ [32m// }[0m
+ 428   │ 
+ 429   │ 
+ 430   │ 
+ 431   │ [32m/* [0m
+ 432   │ [32m  List<int> puntuaciones = [1, 0, 10, 6, 9];[0m
+ 433   │ [32m  var aprobados = puntuaciones.where((puntuacion) => puntuacion > 5);[0m
+ 434   │ [32m  [0m
+ 435   │ [32m  for (var puntuacion in aprobados) {[0m
+ 436   │ [32m    print(puntuacion);[0m
+ 437   │ [32m  }[0m
+ 438   │ 
+ 439   │ [32m  String? name;[0m
+ 440   │ [32m  name = "hola";[0m
+ 441   │ [32m  name.length; */[0m
+ 442   │ 
+───────┴─────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
