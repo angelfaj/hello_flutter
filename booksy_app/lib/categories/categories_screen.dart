@@ -1,4 +1,5 @@
 import 'package:booksy_app/model/book_category.dart';
+import 'package:booksy_app/utils.dart';
 import 'package:flutter/material.dart';
 
 class CategoriesScreen extends StatelessWidget {
@@ -14,9 +15,9 @@ class BookCategoriesGrid extends StatelessWidget {
   BookCategoriesGrid({super.key});
 
   final List<BookCategory> _categories = [
-    BookCategory(id: 1, name: "Ciencia Ficción"),
-    BookCategory(id: 2, name: "Acción"),
-    BookCategory(id: 3, name: "Drama"),
+    BookCategory(id: 1, name: "Ciencia Ficción", colorBg: "A99CCE3"),
+    BookCategory(id: 2, name: "Acción", colorBg: "F0B3E1"),
+    BookCategory(id: 3, name: "Drama", colorBg: "#C5F0B3"),
   ];
 
   @override
@@ -46,13 +47,13 @@ class TileCategory extends StatelessWidget {
       child: InkWell(
         borderRadius: BorderRadius.circular(4),
         onTap: () {
-          //TODO navegar a libros de las categorias
+          _navigateToBooksWithCategory();
         },
         child: Container(
           alignment: AlignmentDirectional.center,
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(4),
-            color: Colors.blue.withOpacity(0.5),
+            color: hexToColor(_category.colorBg),
           ),
           child: Text(
             _category.name,
@@ -62,5 +63,9 @@ class TileCategory extends StatelessWidget {
         ),
       ),
     );
+  }
+
+  void _navigateToBooksWithCategory() {
+    // TODO navegr a pantalla de lista de libros de la categoria
   }
 }

@@ -1,8 +1,9 @@
+import 'package:booksy_app/book_details/book_details_screen.dart';
 import 'package:booksy_app/model/book.dart';
 import 'package:flutter/material.dart';
 
 class HomeScreen extends StatelessWidget {
-  const HomeScreen({Key? key}) : super(key: key);
+  const HomeScreen({super.key});
 
   final List<Book> _books = const [
     Book(
@@ -119,6 +120,9 @@ class ListItemBook extends StatelessWidget {
   }
 
   void _openBookDetails(BuildContext context, Book book) {
-    //TODO navegar a la descripcion del libro
+    Navigator.push(
+      context,
+      MaterialPageRoute(builder: (context) => BookdDetailsScreen(book)),
+    );
   }
 }
