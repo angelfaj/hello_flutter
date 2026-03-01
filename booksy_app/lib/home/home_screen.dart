@@ -1,44 +1,56 @@
 import 'package:booksy_app/book_details/book_details_screen.dart';
 import 'package:booksy_app/model/book.dart';
+import 'package:booksy_app/servies/book_services.dart';
 import 'package:flutter/material.dart';
 
-class HomeScreen extends StatelessWidget {
+class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
 
-  final List<Book> _books = const [
-    Book(
-      1,
-      "Gomorra",
-      "Roberto Saviano",
-      "Los entresijos de la mafia italiana",
-      "assets/images/gomorra.jpg",
-    ),
-    Book(
-      2,
-      "Noches blancas",
-      "Fiodor Dostoyevski",
-      "Novela corta",
-      "assets/images/noches_blancas.jpg",
-    ),
-  ];
+  @override
+  State<HomeScreen> createState() => _HomeScreenState();
+}
+
+class _HomeScreenState extends State<HomeScreen> {
+  List<Book> _books = [];
+
+  @override
+  void initState() {
+    super.initState();
+    _getLastBooks();
+  }
+
+  void _getLastBooks() async {
+    var lastBooks = await BooksService().getLastBook();
+    setState(() {
+      _books = lastBooks;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      margin: EdgeInsets.all(16),
-      child: ListView.builder(
-        itemCount: _books.length + 2,
-        itemBuilder: (context, index) {
-          if (index == 0) {
-            return HeaderWidget();
-          }
-          if (index == 1) {
-            return ListItemHeader();
-          }
-          return ListItemBook(_books[index - 2]);
-        },
-      ),
-    );
+    var showProgress = _books.isEmpty;
+    var listLength = showProgress ? 3 : _books.length + 2;
+
+    return _books.isEmpty
+        ? Center(child: CircularProgressIndicator())
+        : Container(
+            margin: EdgeInsets.all(16),
+            child: ListView.builder(
+              itemCount: listLength,
+              itemBuilder: (context, index) {
+                if (index == 0) {
+                  return HeaderWidget();
+                }
+                if (index == 1) {
+                  return ListItemHeader();
+                }
+                if (showProgress) {
+                  return const Center(child: CircularProgressIndicator());
+                }
+                return ListItemBook(_books[index - 2]);
+              },
+            ),
+          );
   }
 }
 
@@ -68,7 +80,7 @@ class ListItemHeader extends StatelessWidget {
 
 class ListItemBook extends StatelessWidget {
   final Book _book;
-  const ListItemBook(this._book, {Key? key}) : super(key: key);
+  const ListItemBook(this._book, {super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -95,6 +107,8 @@ class ListItemBook extends StatelessWidget {
                       Text(
                         _book.title,
                         style: Theme.of(context).textTheme.headlineSmall,
+                        maxLines: 2,
+                        overflow: TextOverflow.ellipsis,
                       ),
                       const SizedBox(height: 5),
                       Text(

@@ -32,13 +32,12 @@ class BookActionsWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocBuilder<BookshelfBloc, BookShelfState>(
       builder: (context, bookShelfState) {
-        void action() => _addToBookshelf(context, bookId);
+        var action = () => _addToBookshelf(context, bookId);
         var label = "Agregar al estante";
         var color = Colors.green;
 
         if (bookShelfState.bookIds.contains(bookId)) {
-          // ignore: unused_element
-          action() => _removeBookFromBookshelf(context, bookId);
+          action = () => _removeBookFromBookshelf(context, bookId);
           label = "Eliminar del estante";
           color = Colors.red;
         }
